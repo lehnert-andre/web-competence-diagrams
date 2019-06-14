@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+ <title>Web-Competence</title>
+
+ <link rel="stylesheet" type="text/css"
+       href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+
+ <script src="https://d3js.org/d3.v4.min.js"></script>
+
+ <style>
+  body {
+   font-family: 'Open Sans', sans-serif;
+   font-size: 12px;
+   background-color: #fff;
+   margin: 5%;
+  }
+
+  .container {
+   display: flex;
+  }
+
+  #chart {
+   position: relative;
+  }
+
+  #chart path {
+   stroke: #fff;
+  }
+
+  #explanation {
+   position: absolute;
+   top: 270px;
+   left: 250px;
+   width: 250px;
+   text-align: center;
+   color: #666;
+   font-size: 32px;
+   z-index: -1;
+   word-break: break-word;
+  }
+ </style>
+
+</head>
+
+<body>
+
+<header>
+
+</header>
+
+<main>
+ <h1>Web-Competence</h1>
+ <h2>Sunburst</h2>
+
+ <section class="container">
+
+  <div id="main">
+   <div id="sequence"></div>
+   <div id="chart">
+    <div id="explanation" style="visibility: hidden;">
+     <span id="selected-name"></span>
+    </div>
+   </div>
+  </div>
+  <div id="sidebar">
+   <div id="legend"></div>
+  </div>
+
+ </section>
+
+</main>
+
+<footer>
+
+</footer>
+
+<script type="text/javascript" src="convert-csv.js"></script>
+<script type="text/javascript" src="sunburst.js"></script>
+
+</body>
+
+</html>
