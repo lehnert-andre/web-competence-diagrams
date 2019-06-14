@@ -31,7 +31,11 @@ var arc = d3.arc()
 
 // Use d3.text and d3.csvParseRows so that we do not need to have a header
 // row, and can receive the csv as an array of arrays.
-d3.text("web-competences.csv", function(text) {
+
+
+// TODO static d3.text("web-competences.csv", function(text) {
+d3.text("https://docs.google.com/spreadsheets/d/e/2PACX-1vS1jTV_Zx9AuiOmnPePGXrWOSXcXkJUwcYnyJBYNx1u02R5nbDav2dSaPPgYL4pqWeRHOfOfPxi62hY/pub?gid=0&single=true&output=csv", function(text) {
+
     var csv = d3.csvParseRows(text);
     var json = buildHierarchy(csv);
     createVisualization(json);
