@@ -1,15 +1,19 @@
 // Mapping of step names to colors.
 var colors = {
-    "palette": [ "#845EC2", "#D65DB1", "#FF6F91", "#FF9671", "#FFC75F", "#2C73D2", "#0089BA", "#008E9B", "#008F7A", "#00C9A7", "#B39CD0", "#C34A36", "#FF8066", "#D5CABD"],
+    "palette": ["#845EC2", "#D65DB1", "#FF6F91", "#FF9671", "#FFC75F", "#2C73D2", "#0089BA", "#008E9B", "#008F7A", "#00C9A7", "#B39CD0", "#C34A36", "#FF8066", "#D5CABD"],
     "default": "#bbbbbb"
 };
 
 const buildHierarchy = function (rows) {
     var root = {"name": "root", "children": []};
 
-    rows.sort(function(columns1, columns2) {
-        if(columns1[0] < columns2[0]) { return -1; }
-        if(columns1[0] > columns2[0]) { return 1; }
+    rows.sort(function (columns1, columns2) {
+        if (columns1[0] < columns2[0]) {
+            return -1;
+        }
+        if (columns1[0] > columns2[0]) {
+            return 1;
+        }
         return 0;
 
     });

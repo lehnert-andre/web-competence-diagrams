@@ -4,7 +4,8 @@
  <meta charset="UTF-8">
  <title>Web-Competence</title>
 
- <link rel="stylesheet" type="text/css"
+ <link rel="stylesheet"
+       type="text/css"
        href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
 
  <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -59,7 +60,8 @@
   <div id="main">
    <div id="sequence"></div>
    <div id="chart">
-    <div id="explanation" style="visibility: hidden;">
+    <div id="explanation"
+         style="visibility: hidden;">
      <span id="selected-name"></span>
     </div>
    </div>
@@ -76,18 +78,10 @@
 
 </footer>
 
-<script type="text/javascript" src="convert-csv.js"></script>
-<script type="text/javascript" src="sunburst.js"></script>
-
-
-<script>
-    window.addEventListener("load", () => {
-      fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS1jTV_Zx9AuiOmnPePGXrWOSXcXkJUwcYnyJBYNx1u02R5nbDav2dSaPPgYL4pqWeRHOfOfPxi62hY/pub?gid=0&single=true&output=csv")
-          .then(resp => console.log(resp)).catch(error => console.error(error));
-
-    });
-</script>
-
+<script type="text/javascript"
+        src="convert-csv.js"></script>
+<script type="text/javascript"
+        src="sunburst.js"></script>
 
 </body>
 
