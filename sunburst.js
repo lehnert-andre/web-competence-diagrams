@@ -35,7 +35,6 @@ var arc = d3.arc()
 
 // TODO static d3.text("web-competences.csv", function(text) {
 d3.text("https://docs.google.com/spreadsheets/d/e/2PACX-1vS1jTV_Zx9AuiOmnPePGXrWOSXcXkJUwcYnyJBYNx1u02R5nbDav2dSaPPgYL4pqWeRHOfOfPxi62hY/pub?gid=0&single=true&output=csv", function(text) {
-
     var csv = d3.csvParseRows(text);
     var json = buildHierarchy(csv);
     createVisualization(json);
@@ -61,7 +60,7 @@ function createVisualization(json) {
     // For efficiency, filter nodes to keep only those large enough to see.
     var nodes = partition(root).descendants()
         .filter(function(d) {
-            return (d.x1 - d.x0 > 0.005); // 0.005 radians = 0.29 degrees
+            return (d.x1 - d.x0 > 0.0025); // 0.005 radians = 0.29 degrees
         });
 
     var path = vis.data([json]).selectAll("path")
