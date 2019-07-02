@@ -4,79 +4,69 @@ var colors = {
     "default": "#bbbbbb"
 };
 
-const buildHierarchy = function (rows) {
-    var root = {"name": "root", "children": []};
 
-    rows.sort(function (columns1, columns2) {
-        if (columns1[0] < columns2[0]) {
-            return -1;
-        }
-        if (columns1[0] > columns2[0]) {
-            return 1;
-        }
-        return 0;
+const buildHierarchy = function (csv) {
 
-    });
+    // append columns to one line
+    const rows = [];
+    for (var row = 0; row < csv.length; row++) {
+        const rowCols = csv[row];
+        let line = '';
+        for (var col = 0; col < rowCols.length; col++) {
+            const colValue = rowCols[col];
 
-    for (var row = 0; row < rows.length; row++) {
-        var currentRow = rows[row];
-
-        var category = getNode(currentRow[0], root);
-        let currentNode = category;
-
-        for (var col = 1; col < currentRow.length - 1; col++) {
-            const currentCol = currentRow[col];
-            const node = getNode(currentCol, currentNode);
-
-            if (col + 1 === currentRow.length - 1) {
-                node.size = currentRow[col + 1];
-            }
-            if (isNewNode(currentCol, currentNode)) {
-                currentNode.children.push(node);
-            } else {
-                currentNode = node;
+            if (colValue && colValue !== '') {
+                line += rowCols[col];
+                 line += '-'; //separator
             }
         }
 
-        if (currentRow.length === 2) {
-            currentNode.size = currentRow[1];
+        if (line.endsWith('-') || line.endsWith(',')) {
+            line = line.substr(0, line.length - 1);
         }
 
-        if (isNewNode(currentRow[0], root)) {
-            category.color = colors.palette[root.children.length % colors.palette.length];
-            root.children.push(category);
-        }
+        rows.push(line);
     }
 
-    console.log(JSON.stringify(root));
+    var root = {"name": "root", "children": []};
+    for (var i = 0; i < rows.length; i++) {
+        try {
+            var sequence = rows[i];
+
+            var parts = sequence.split("-");
+            var currentNode = root;
+            for (var j = 0; j < parts.length - 1; j++) {
+                var children = currentNode["children"];
+                var nodeName = parts[j];
+                var childNode;
+                if (j + 1 < parts.length - 1) {
+                    // Not yet at the end of the sequence; move down the tree.
+                    var foundChild = false;
+                    for (var k = 0; k < children.length; k++) {
+                        if (children[k]["name"] == nodeName) {
+                            childNode = children[k];
+                            foundChild = true;
+                            break;
+                        }
+                    }
+                    // If we don't already have a child node for this branch, create it.
+                    if (!foundChild) {
+                        childNode = {"name": nodeName, "children": []};
+                        childNode.color = colors.palette[root.children.length % colors.palette.length];
+                        children.push(childNode);
+                    }
+                    currentNode = childNode;
+                } else {
+                    // Reached the end of the sequence; create a leaf node.
+                    childNode = {"name": nodeName, "size": parts[parts.length - 1]};
+                    children.push(childNode);
+                }
+            }
+        } catch (e) {
+            console.error(e);
+
+        }
+    }
 
     return root;
 };
-
-
-function getNode(data, parentNode) {
-    var category = {"name": data, "children": []};
-
-    for (var i = 0; i < parentNode.children.length; i++) {
-        if (parentNode.children[i].name === data) {
-            category = parentNode.children[i];
-            break;
-        }
-    }
-
-    return category;
-}
-
-
-function isNewNode(data, parentNode) {
-    var newCategory = true;
-
-    for (var i = 0; i < parentNode.children.length; i++) {
-        if (parentNode.children[i].name === data) {
-            newCategory = false;
-            break;
-        }
-    }
-
-    return newCategory;
-}

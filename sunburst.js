@@ -45,8 +45,7 @@ d3.text("https://docs.google.com/spreadsheets/d/e/2PACX-1vS1jTV_Zx9AuiOmnPePGXrW
     var csv = d3.csvParseRows(text);
     var json = buildHierarchy(csv);
 
-    // TODO use json
-    createVisualization(DATA);
+    createVisualization(json);
 });
 
 // Main function to draw and set up the visualization, once we have the data.
