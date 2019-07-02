@@ -16,7 +16,7 @@ const buildHierarchy = function (csv) {
             const colValue = rowCols[col];
 
             if (colValue && colValue !== '') {
-                line += rowCols[col];
+                line += colValue.replace('-', '~');
                  line += '-'; //separator
             }
         }
@@ -37,7 +37,7 @@ const buildHierarchy = function (csv) {
             var currentNode = root;
             for (var j = 0; j < parts.length - 1; j++) {
                 var children = currentNode["children"];
-                var nodeName = parts[j];
+                var nodeName = parts[j].replace('~', '-');
                 var childNode;
                 if (j + 1 < parts.length - 1) {
                     // Not yet at the end of the sequence; move down the tree.
@@ -59,6 +59,10 @@ const buildHierarchy = function (csv) {
                 } else {
                     // Reached the end of the sequence; create a leaf node.
                     childNode = {"name": nodeName, "size": parts[parts.length - 1]};
+
+                    console.log('Other children: ' + JSON.stringify(children));
+                    console.log('Last child: ' + JSON.stringify(childNode));
+
                     children.push(childNode);
                 }
             }
