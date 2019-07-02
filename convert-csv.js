@@ -4,6 +4,10 @@ var colors = {
     "default": "#bbbbbb"
 };
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.split(search).join(replacement);
+};
 
 const buildHierarchy = function (csv) {
 
@@ -16,7 +20,7 @@ const buildHierarchy = function (csv) {
             const colValue = rowCols[col];
 
             if (colValue && colValue !== '') {
-                line += colValue.replace('-', '~');
+                line += colValue.replaceAll('-', '~');
                  line += '-'; //separator
             }
         }
@@ -24,9 +28,10 @@ const buildHierarchy = function (csv) {
         if (line.endsWith('-') || line.endsWith(',')) {
             line = line.substr(0, line.length - 1);
         }
-
         rows.push(line);
     }
+
+    console.log('Rows: ' + JSON.stringify(rows))
 
     var root = {"name": "root", "children": []};
     for (var i = 0; i < rows.length; i++) {
@@ -37,7 +42,7 @@ const buildHierarchy = function (csv) {
             var currentNode = root;
             for (var j = 0; j < parts.length - 1; j++) {
                 var children = currentNode["children"];
-                var nodeName = parts[j].replace('~', '-');
+                var nodeName = parts[j].replaceAll('~', '-');
                 var childNode;
                 if (j + 1 < parts.length - 1) {
                     // Not yet at the end of the sequence; move down the tree.
@@ -59,6 +64,8 @@ const buildHierarchy = function (csv) {
                 } else {
                     // Reached the end of the sequence; create a leaf node.
                     childNode = {"name": nodeName, "size": parts[parts.length - 1]};
+                    console.log('Add last child: ' + nodeName);
+                    console.log('to children: ' + JSON.stringify(children));
                     children.push(childNode);
                 }
             }
