@@ -59,10 +59,6 @@ const buildHierarchy = function (csv) {
                 } else {
                     // Reached the end of the sequence; create a leaf node.
                     childNode = {"name": nodeName, "size": parts[parts.length - 1]};
-
-                    console.log('Other children: ' + JSON.stringify(children));
-                    console.log('Last child: ' + JSON.stringify(childNode));
-
                     children.push(childNode);
                 }
             }
